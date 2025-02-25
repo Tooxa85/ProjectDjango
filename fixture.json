@@ -1,0 +1,57 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+        "name": "Электронника",
+        "description": "телефизоры, телефоны, компьютеры"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+        "name": "Автотовары",
+        "description": "Двигатели и комплектующие"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "name": "Банан",
+        "description": "",
+        "image": "",
+        "category": null,
+        "price": null,
+        "created_at": null,
+        "updated_at": null
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Мобильный телефон",
+        "description": "В этом телефоне всё прекрасно, и в тоже время - функционально. Красивое и практичное покрытие корпуса телефона, камера 1,3Mpx, Bluetooth, кнопка SOS, яркий фонарик, яркий дисплей 2.8",
+        "image": "",
+        "category": null,
+        "price": null,
+        "created_at": null,
+        "updated_at": null
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "name": "Клапанная крышка",
+        "description": "Шевроле Круз Опель Astra Zafira 1.6 1.8",
+        "image": "",
+        "category": null,
+        "price": 5000,
+        "created_at": null,
+        "updated_at": null
+    }
+}
+]
