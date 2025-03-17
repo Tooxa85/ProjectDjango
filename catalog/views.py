@@ -1,7 +1,6 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 
-from catalog.models import Product
+from catalog.models import Product, Contact
 
 
 class ProductListView(ListView):
@@ -13,5 +12,8 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'products/product_detail.html'
 
-def contacts(request):
-    return render(request, 'products/contacts.html')
+
+class ContactsView(TemplateView):
+    model = Contact
+    fields = ['name', 'phone', 'message']
+    template_name = 'products/contacts.html'
