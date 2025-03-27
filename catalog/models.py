@@ -1,4 +1,5 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Product(models.Model):
@@ -66,3 +67,30 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Contact(models.Model):
+    name = models.CharField(
+        max_length=50,
+        verbose_name="Имя и Фамилия",
+        help_text="Введите ваше имя и фамилию",
+    )
+    phone = PhoneNumberField(
+        verbose_name="Номер телефона",
+        help_text="Введите описание категории",
+        unique=True,
+    )
+    message = models.TextField(
+        verbose_name="Сообщение",
+        help_text="Введите ваше сообщение",
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        verbose_name = "Контакт"
+        verbose_name_plural = "Контакты"
+        ordering = ["phone", "name", "message"]
+
+    def __str__(self):
+        return self.phone

@@ -7,7 +7,7 @@
         {% for product in object_list %}
         <div class="col">
           <div class="card shadow-sm">
-            <img src="{{ catalog.image | media_filter }}">
+            <img src="{{ product.image | media_filter }}" class="img-fluid mb-3 rounded">
             <div class="card-body">
               <p class="card-text">{{ object.name }}</p>
               <div class="d-flex justify-content-between align-items-center">
@@ -20,6 +20,9 @@
         </div>
         {% endfor %}
       </div>
+      <div class="btn-group ">
+          <a class="btn btn-primary" href="{% url 'catalog:product_form' %}">Создать новый продукт</a>
+        </div>
     </div>
   </div>
 {% endblock %}
