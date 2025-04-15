@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -41,10 +42,25 @@ class Product(models.Model):
         blank=True,
         null=True,
     )
+    is_available = models.BooleanField(
+        default=False,
+        verbose_name="доступность в каталоге",
+    )
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name="Владелец",
+        related_name="products",
+        null=True,
+    )
 
     class Meta:
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+            ("remove_any_product", "Remove any product"),
+        ]
 
     def __str__(self):
         return self.name
