@@ -25,10 +25,20 @@ class ContactsView(TemplateView):
     template_name = 'products/contacts.html'
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     template_name = 'products/product_delete.html'
     success_url = reverse_lazy('catalog:products_list')
+
+
+    def test_func(self):
+        product = self.get_object()
+        return self.request.user == product.owner or self.request.user.has_perm(
+            "catalog.can_unpublish_product"
+        )
+
+    def handle_no_permission(self):
+        raise PermissionDenied
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -38,7 +48,15 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('catalog:products_list')
 
 
-class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
+        return super().form_valid(form)
+
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'products/product_form.html'
@@ -49,15 +67,4 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return ProductForm
         if self.request.user.has_perm("catalog.can_unpublish_product"):
             return ProductModeratorForm
-        if self.request.user.has_perm("catalog.remove_any_product"):
-            return ProductModeratorForm
-        return ProductForm
-
-    def test_func(self):
-        product = self.get_object()
-        return self.request.user == product.owner or self.request.user.has_perm(
-            "catalog.can_unpublish_product"
-        )
-
-    def handle_no_permission(self):
         raise PermissionDenied
