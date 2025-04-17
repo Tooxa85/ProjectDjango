@@ -22,7 +22,7 @@ def get_products_from_cache():
 def get_products_by_category(category_id):
 
     if not CACHE_ENABLED:
-        return Product.objects.filter(category=Category.objects.get(pk=category_id))
+        return Product.objects.filter(category_id=category_id)
     key = f'products_by_category_{category_id}'
     products = cache.get(key)
     if products is not None:
