@@ -1,0 +1,30 @@
+{% extends 'products/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for product in object_list %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="{{ product.image | media_filter }}" class="img-fluid mb-3 rounded">
+            <div class="card-body">
+              <p class="card-text">{{ product.name }}</p>
+              <h4 class="card-title pricing-card-title">₽ {{ product.price }}</h4>
+              <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        <li> {{ product.description|truncatechars:100 }}</li>
+                    </ul>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a class="btn btn-primary" href="{% url 'catalog:products_detail' product.pk %}" role="button">Посмотреть</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+</div>
+<a class="btn btn-primary mr-3" href="{% url 'catalog:product_form' %}" role="button">Создать новый продукт</a>
+{% endblock %}
