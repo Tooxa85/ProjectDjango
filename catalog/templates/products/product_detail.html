@@ -6,7 +6,7 @@
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col">
           <div class="card shadow-sm">
-            <img src="{{ product.image | media_filter }}" class="card-img-top" alt="{{ object.name }}">
+            <img src="{{ product.image | media_filter }}" class="img-fluid mb-3 rounded">
             <div class="card-body">
               <p class="card-text">Название продукта: {{ object.name }} </p>
               <p class="card-text">Описание продукта: {{ object.description}} </p>
@@ -16,9 +16,14 @@
                 <div class="btn-group">
                   <a class="btn btn-primary" href="{% url 'catalog:products_list' %}" role="button">Вернуться</a>
                 </div>
-                <div class="btn-group">
-                  <a class="btn btn-primary" href="{% url 'catalog:product_delete' product.pk %}">Удалить</a>
-                </div>
+                 {% if perms.catalog.can_unpublish_product or user == product.owner %}
+                    <div class="btn-group">
+                      <a class="btn btn-primary" href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
+                    </div>
+                    <div class="btn-group">
+                      <a class="btn btn-primary" href="{% url 'catalog:product_delete' product.pk %}">Удалить</a>
+                    </div>
+                 {% endif %}
               </div>
             </div>
           </div>
