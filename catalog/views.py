@@ -34,7 +34,7 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         product = self.get_object()
         return self.request.user == product.owner or self.request.user.has_perm(
-            "catalog.can_unpublish_product"
+            "catalog.remove_any_product"
         )
 
     def handle_no_permission(self):
